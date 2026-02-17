@@ -1,0 +1,3 @@
+<template>
+  <h1>Slide 6</h1>
+</template>

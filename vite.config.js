@@ -1,7 +1,8 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import svgLoader from 'vite-svg-loader'
 
 export default defineConfig({
-  plugins: [vue()],
-  base: '/vite-graphologie/'
+  plugins: [vue(), svgLoader()],
+  base: '/vite-graphologie/' // for Github pages or any other host solution
 })
