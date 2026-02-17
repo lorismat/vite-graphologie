@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import { animate, svg, stagger } from 'animejs'
 import Reveal from 'reveal.js/dist/reveal.esm.js'
 
@@ -32,6 +32,7 @@ function runAnimation() {
   })
 }
 
+// to industrialize
 let revealListener = null
 onMounted(() => {
   if (Reveal) {

@@ -4,17 +4,15 @@ import 'reveal.js/dist/theme/white.css'
 import './style.css'
 
 import { createApp } from 'vue'
-import SlideOne from './slides/SlideOne.vue'
-import SlideTwo from './slides/SlideTwo.vue'
-import SlideThree from './slides/SlideThree.vue'
-import SlideFour from './slides/SlideFour.vue'
-import SlideFive from './slides/SlideFive.vue'
-import SlideSix from './slides/SlideSix.vue'
-import SlideSeven from './slides/SlideSeven.vue'
+import SlideWriting from './slides/SlideWriting.vue'
+import SlideClassic from './slides/SlideClassic.vue'
+import SlideAnime from './slides/SlideAnime.vue'
+import SlideThreeJs from './slides/SlideThreeJs.vue'
+import SlideTyping from './slides/SlideTyping.vue'
 
 Reveal.initialize({
   hash: false,
-  progress: false,
+  progress: true,
   controls: false,
   slideNumber: false,
   backgroundTransition: 'none',
@@ -22,10 +20,26 @@ Reveal.initialize({
 });
 
 // Mount Vue components INSIDE slides
-createApp(SlideOne).mount('#vue-slide-1')
-createApp(SlideTwo).mount('#vue-slide-2')
-createApp(SlideThree).mount('#vue-slide-3')
-createApp(SlideFour).mount('#vue-slide-4')
-createApp(SlideFive).mount('#vue-slide-5')
-createApp(SlideSix).mount('#vue-slide-6')
-createApp(SlideSeven).mount('#vue-slide-7')
+createApp(SlideClassic, {
+  text: 'Hello from...'
+}).mount('#vue-slide-0')
+
+createApp(SlideWriting, {
+  svgId: 'writing-1',
+  svgFile: 'first_plain'
+}).mount('#vue-slide-1')
+
+createApp(SlideAnime).mount('#vue-slide-2')
+
+createApp(SlideWriting, {
+  svgId: 'writing-2',
+  svgFile: 'second_plain'
+}).mount('#vue-slide-3')
+
+createApp(SlideWriting, {
+  svgId: 'writing-3',
+  svgFile: 'third_plain'
+}).mount('#vue-slide-4')
+
+createApp(SlideThreeJs).mount('#vue-slide-5')
+createApp(SlideTyping).mount('#vue-slide-6')

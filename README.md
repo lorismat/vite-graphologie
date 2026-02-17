@@ -2,13 +2,11 @@
 
 ## Set up
 
-
-
 ## Deployment
 
 ### Online via Github Pages
 
-[Online test version]()
+[Online test version](https://lorismat.github.io/vite-graphologie/)
 
 To run on Github Pages, make sure you update the `vite.config.js` file with `base: '/vite-graphologie/'` and the following config:
 ```
