@@ -1,6 +1,6 @@
 <template>
   <div class="svg-center">
-    <component :is="Diagram" :id="svgId" />
+    <component :is="Diagram" :id="svgFile" />
   </div>
 </template>
 
@@ -15,7 +15,6 @@ import { runSvgStrokeAnimation } from '@/utils/svgAnimation.js'
 const Diagram = shallowRef(null)
 
 const props = defineProps({
-  svgId: String, 
   svgFile: String
 })
 
@@ -38,7 +37,8 @@ onMounted(async () => {
   await nextTick()
   if (Reveal) {
     revealListener = async (event) => {
-      const svgEl = document.getElementById(props.svgId)
+      const svgEl = document.getElementById(props.svgFile)
+      
       if (event.currentSlide.contains(svgEl)) {
         await nextTick()
         removeSvgAttributes()
@@ -49,13 +49,3 @@ onMounted(async () => {
   }
 })
 </script>
-
-<style scoped>
-.svg-center {
-  text-align: center !important;
-}
-
-.svg-center svg {
-  display: block;
-}
-</style>

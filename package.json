@@ -12,6 +12,7 @@
   "dependencies": {
     "animejs": "^4.3.6",
     "reveal.js": "^5.2.1",
+    "three": "^0.183.0",
     "vite-svg-loader": "^5.1.0",
     "vue": "^3.5.25"
   },

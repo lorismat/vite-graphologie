@@ -26,3 +26,52 @@ export function runSvgStrokeAnimation(svgEl, speed = 0.1) {
     accumulated += duration
   })
 }
+
+// Keep track of the current 'version' of the animation for each SVG
+const activeAnimationVersions = new Map();
+
+export function runSvgTypingAnimation(svgFile) {
+  // 1. Create a unique ID for this specific animation attempt
+  const runId = Math.random().toString(36).substr(2, 9);
+  activeAnimationVersions.set(svgFile, runId);
+
+  const nodes = [...document.querySelectorAll(`#${svgFile} text tspan tspan`)];
+  
+  // 2. Prepare segments and clear existing text
+  const segments = nodes.map(el => {
+    const fullText = el.getAttribute('data-full-text') || el.textContent;
+    el.setAttribute('data-full-text', fullText); // Store it so we don't lose it on repeat visits
+    el.textContent = ''; 
+    return { el, text: fullText, index: 0 };
+  });
+
+  let currentSegment = 0;
+
+  function typeNext() {
+    // 3. CHECK: Is this STILL the active animation for this SVG?
+    if (activeAnimationVersions.get(svgFile) !== runId) return;
+
+    if (currentSegment >= segments.length) return;
+
+    const segment = segments[currentSegment];
+    
+    if (segment.index > segment.text.length) {
+      currentSegment++;
+      typeNext();
+      return;
+    }
+
+    segment.el.textContent = segment.text.slice(0, segment.index);
+    segment.index++;
+
+    // Randomize speed
+    const speed = 30 + Math.random() * 30;
+
+    // 4. Use a standard setTimeout or anime to trigger next char
+    setTimeout(() => {
+      typeNext();
+    }, speed);
+  }
+  
+  typeNext();
+}

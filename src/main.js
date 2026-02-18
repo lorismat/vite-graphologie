@@ -10,6 +10,9 @@ import SlideAnime from './slides/SlideAnime.vue'
 import SlideThreeJs from './slides/SlideThreeJs.vue'
 import SlideTyping from './slides/SlideTyping.vue'
 
+let app = null
+let threeSlideComponent = null
+
 Reveal.initialize({
   hash: false,
   progress: true,
@@ -19,27 +22,46 @@ Reveal.initialize({
   transition: 'none'
 });
 
-// Mount Vue components INSIDE slides
 createApp(SlideClassic, {
   text: 'Hello from...'
-}).mount('#vue-slide-0')
+}).mount('#vue-slide-intro')
+
+createApp(SlideAnime, {
+
+}).mount('#vue-slide-anime')
 
 createApp(SlideWriting, {
-  svgId: 'writing-1',
-  svgFile: 'first_plain'
-}).mount('#vue-slide-1')
+  svgFile: 'handwriting'
+}).mount('#vue-slide-handwriting')
 
-createApp(SlideAnime).mount('#vue-slide-2')
+createApp(SlideTyping, {
+  svgFile: 'typing'
+}).mount('#vue-slide-typing')
 
-createApp(SlideWriting, {
-  svgId: 'writing-2',
-  svgFile: 'second_plain'
-}).mount('#vue-slide-3')
+/* Three.js specific */
+Reveal.on('ready', (event) => {
+  const slide = event.currentSlide
+  const container = slide.querySelector('#vue-slide-threejs')
+  if (container && !app) {
+    app = createApp(SlideThreeJs)
+    threeSlideComponent = app.mount(container)
+    threeSlideComponent.start()
+  }
+})
 
-createApp(SlideWriting, {
-  svgId: 'writing-3',
-  svgFile: 'third_plain'
-}).mount('#vue-slide-4')
-
-createApp(SlideThreeJs).mount('#vue-slide-5')
-createApp(SlideTyping).mount('#vue-slide-6')
+/* Three.js specific */
+Reveal.on('slidechanged', (event) => {
+  const prevContainer = event.previousSlide?.querySelector('#vue-slide-threejs')
+  if (prevContainer && threeSlideComponent) {
+    threeSlideComponent.stop()
+    app.unmount()
+    app = null
+    threeSlideComponent = null
+  }
+  const container = event.currentSlide.querySelector('#vue-slide-threejs')
+  if (container && !app) {
+    app = createApp(SlideThreeJs)
+    threeSlideComponent = app.mount(container)
+    threeSlideComponent.start()
+  }
+})
